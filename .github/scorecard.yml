@@ -1,37 +1,28 @@
-name: Scorecard supply-chain security
+name: OpenSSF Scorecard
+
 on:
-  branch_protection_rule:
+  workflow_dispatch:
   schedule:
-    - cron: '41 15 * * 5'
-  push:
-    branches: [ "main" ]
+    - cron: '0 12 * * 5' # every Friday at 12:00 UTC
 
 permissions:
+  id-token: write
   contents: read
-  actions: none
 
 jobs:
   analysis:
-    name: Scorecard analysis
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      security-events: write
-      id-token: write
-
     steps:
-      - name: "Checkout code"
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: "Run analysis"
-        uses: ossf/scorecard-action@v2.3.1  # Fixed here
+      - name: Run Scorecard analysis
+        uses: ossf/scorecard-action@v2
         with:
           results_file: results.sarif
           results_format: sarif
-          publish_results: true
 
-      - name: "Upload artifact"
-        uses: actions/upload-artifact@v4
+      - name: Upload to GitHub code scanning
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          name: SARIF file
-          path: results.sarif
+          sarif_file: results.sarif
