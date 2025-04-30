@@ -1,7 +1,7 @@
-📌 Project Title
+📌 Project Title:
 Porject: Web Vulnerability Demonstration and Mitigation
 
-📖 Description
+📖 Description:
 This project showcases a deliberately vulnerable web application designed to educate users on common cybersecurity flaws. It serves as a practical guide for identifying, exploiting, and mitigating these vulnerabilities.
 ## 🔍 Project Health
 
